@@ -1,0 +1,30 @@
+# Data and outputs
+data/
+runs/
+logs/*.out
+logs/*.err
+submissions/
+*.csv
+*.zip
+
+# Model files
+*.ckpt
+*.pth
+*.pt
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Environments
+venv/
+.env
+
+# Secrets
+.kaggle/
+kaggle.json
+
+# Tracking
+wandb/
+mlruns/
