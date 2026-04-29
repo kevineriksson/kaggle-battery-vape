@@ -1,21 +1,28 @@
 import argparse
-import os
-import torch
-from pathlib import Path
+from ultralytics import YOLO
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--data', type=str, required=True)
-    parser.add_argument('--out', type=str, required=True)
-    parser.add_argument('--epochs', type=int, default=10)
-    parser.add_argument('--lr', type=float, default=1e-3)
-    parser.add_argument('--batch_size', type=int, default=32)
-    args = parser.parse_args()
+    p = argparse.ArgumentParser()
+    p.add_argument('--data', required=True, help='Path to data.yaml')
+    p.add_argument('--out', required=True, help='Output dir for runs')
+    p.add_argument('--model', default='yolov8s.pt')
+    p.add_argument('--epochs', type=int, default=100)
+    p.add_argument('--imgsz', type=int, default=640)
+    p.add_argument('--batch', type=int, default=16)
+    args = p.parse_args()
 
-    Path(args.out).mkdir(parents=True, exist_ok=True)
-
-    # ... your training code ...
-    # save checkpoints to args.out every epoch
+    model = YOLO(args.model)
+    model.train(
+        data=args.data,
+        epochs=args.epochs,
+        imgsz=args.imgsz,
+        batch=args.batch,
+        project=args.out,
+        name='train',
+        patience=20,
+        save=True,
+        plots=True,
+    )
 
 if __name__ == '__main__':
     main()
