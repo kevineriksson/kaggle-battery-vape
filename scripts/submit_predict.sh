@@ -16,10 +16,10 @@ mkdir -p submissions
 OUT_FILE=submissions/submission_$SLURM_JOB_ID.csv
 
 # CKPT and TEST_DIR passed via --export
-python src/predict.py \
-    --ckpt $CKPT \
-    --test_dir $TEST_DIR \
-    --out $OUT_FILE \
-    --conf 0.25
+python src/prepare_data.py \
+    --coco data/train_annotations.json \
+    --images data/train/images \
+    --out data/yolo \
+    --val_frac 0.2
 
 echo "Wrote: $OUT_FILE"
